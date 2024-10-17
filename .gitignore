@@ -1,4 +1,5 @@
 ### Java ###
+/target/
 # Compiled class file
 *.class
 
