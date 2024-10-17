@@ -4,8 +4,19 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.stream.Stream;
 
 public class Day01Part1 {
+    private static final String INPUT_PATH = "/../inputs/day_01.txt";
+    private final String inputPath;
+
+    public Day01Part1() {
+        String filePath = new File("").getAbsolutePath();
+        this.inputPath = filePath.concat(INPUT_PATH);
+    }
+
     public int extractNumbers(String text) {
         int left = 0, right = 0;
 
@@ -38,7 +49,6 @@ public class Day01Part1 {
 
         while (line != null) {
             total += this.extractNumbers(line);
-
             line = reader.readLine();
         }
 
@@ -46,11 +56,24 @@ public class Day01Part1 {
     }
 
     public int run() {
-        String filePath = new File("").getAbsolutePath();
-        filePath = filePath.concat("/../inputs/day_01.txt");
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(this.inputPath))) {
             int result = this.calculateTotal(reader);
+            System.out.println(result);
+            return result;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public int calculateTotalWithStream(Stream<String> stream) throws IOException {
+        return stream.parallel()
+                .map(this::extractNumbers)
+                .reduce(0, Integer::sum);
+    }
+
+    public int runWithStream() {
+        try (Stream<String> lines = Files.lines(Paths.get(this.inputPath))) {
+            int result = this.calculateTotalWithStream(lines);
             System.out.println(result);
             return result;
         } catch (IOException e) {

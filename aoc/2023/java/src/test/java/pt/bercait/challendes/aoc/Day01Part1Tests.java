@@ -6,6 +6,7 @@ import pt.bercait.challenges.aoc.Day01Part1;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -23,10 +24,10 @@ public class Day01Part1Tests {
     @Test
     public void verifyCalculateTotal() throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new StringReader("""
-                    1abc2
-                    pqr3stu8vwx
-                    a1b2c3d4e5f
-                    treb7uchet"""));
+                1abc2
+                pqr3stu8vwx
+                a1b2c3d4e5f
+                treb7uchet"""));
 
         assertEquals(142, day01Part1.calculateTotal(bufferedReader));
     }
@@ -35,4 +36,21 @@ public class Day01Part1Tests {
     public void verifyRun() {
         assertEquals(53386, day01Part1.run());
     }
+
+    @Test
+    public void verifyCalculateTotalWithStream() throws IOException {
+        Stream<String> inputStream = Stream.of(
+                "1abc2",
+                "pqr3stu8vwx",
+                "a1b2c3d4e5f",
+                "treb7uchet");
+
+        assertEquals(142, day01Part1.calculateTotalWithStream(inputStream));
+    }
+
+    @Test
+    public void verifyRunWithStream() {
+        assertEquals(53386, day01Part1.runWithStream());
+    }
+
 }
